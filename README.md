@@ -1,6 +1,7 @@
 # Akka Essentials
 
 ## Actors
+### Basics
 With traditional objects:
 - We store their state as data
 - we call their methods
@@ -20,6 +21,30 @@ Some natural principles:
   - it takes time for a message to travel
   - sending and receiving may not happen at the same time
   - or even in the same context
+
+![Akka](images/how_akka_works_1.png)
+![Akka](images/how_akka_works_2.png)
+
+### Communication
+Sending a message
+- Message is enqueued in the actor's mailbox
+- (thread-safe)
+
+Processing a message
+- A thread is scheduled to run this actor
+- Messages are extracted from the mailbox, in order
+- The thread invokes the handler on each message
+- At this point the actor is unscheduled
+
+### Guarantees
+Only one thread operated on an actor at any time
+- Actors are effectively single-threaded
+- No locks needed
+- Message process is atomic
+
+Message delivery guarantees
+- At most once delivery
+- For any sender-receiver pair, the message order is maintained
   
 ## Course Contents
 - [x] 1h11min Scala and Parallel Programming recap
