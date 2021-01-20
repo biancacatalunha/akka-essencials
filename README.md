@@ -48,7 +48,7 @@ Message delivery guarantees
   
 ## Course Contents
 - [x] 1h11min Scala and Parallel Programming recap
-- [ ] 3h57min Akka Actors 
+- [x] 3h57min Akka Actors 
 - [ ] 1h58min Testing Akka Actors 
 - [ ] 1h51min Fault Tolerance
 - [ ] 1h37min Akka Infrastructure
