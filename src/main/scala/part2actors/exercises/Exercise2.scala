@@ -1,9 +1,6 @@
-package part2actors
+package part2actors.exercises
 
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}
-import part2actors.Exercise2.Citizen.Vote
-import part2actors.Exercise2.Counter.{Decrement, Increment, Print}
-import part2actors.Exercise2.VoteAggregator.AggregateVotes
 
 object Exercise2 extends App {
 
@@ -14,12 +11,17 @@ object Exercise2 extends App {
    */
 
   object Counter {
+
     case object Increment
+
     case object Decrement
+
     case object Print
+
   }
 
   class Counter extends Actor {
+
     import Counter._
 
     override def receive: Receive = countReceive(0)
@@ -35,6 +37,8 @@ object Exercise2 extends App {
 
     }
   }
+
+  import Counter._
 
   val counter = actorSystem.actorOf(Props[Counter], "myCounter")
   (1 to 5).foreach(_ => counter ! Increment)
@@ -57,7 +61,9 @@ object Exercise2 extends App {
     case class VoteStatusReply(candidate: Option[String])
 
   }
+
   class Citizen extends Actor {
+
     import Citizen._
 
     override def receive: Receive = voteReceived(None)
@@ -79,7 +85,9 @@ object Exercise2 extends App {
     case object PrintResults
 
   }
+
   class VoteAggregator extends Actor {
+
     import Citizen._
     import VoteAggregator._
 
@@ -95,8 +103,8 @@ object Exercise2 extends App {
       case VoteStatusReply(Some(candidate)) =>
         val updatedRemainingCitizens = remainingCitizens - sender()
         val updatedNumOfVotes = votes.getOrElse(candidate, 0) + 1
-        val updatedVotes:Map[String, Int] = votes + (candidate -> updatedNumOfVotes)
-        if(updatedRemainingCitizens.isEmpty) {
+        val updatedVotes: Map[String, Int] = votes + (candidate -> updatedNumOfVotes)
+        if (updatedRemainingCitizens.isEmpty) {
           println(s"[aggregatorStatus] Poll status: $updatedVotes")
         } else {
           context.become(aggregateStatus(updatedVotes, updatedRemainingCitizens))
@@ -105,6 +113,9 @@ object Exercise2 extends App {
       case _ => println("Something else happened")
     }
   }
+
+  import Citizen._
+  import VoteAggregator._
 
   val alice = actorSystem.actorOf(Props[Citizen], "alice")
   val bob = actorSystem.actorOf(Props[Citizen], "bob")

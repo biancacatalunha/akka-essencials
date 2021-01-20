@@ -1,9 +1,6 @@
-package part2actors
+package part2actors.exercises
 
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}
-import part2actors.Exercise1.BankAccount.{BankStatement, DepositMoney, WithdrawMoney}
-import part2actors.Exercise1.Counter.{Decrement, Increment, Print}
-import part2actors.Exercise1.Person.LiveTheLife
 
 object Exercise1 extends App {
 
@@ -17,7 +14,9 @@ object Exercise1 extends App {
 
   //my solution
   case class IncrementOne()
+
   case class DecrementOne()
+
   case class PrintCount()
 
   class CounterActor extends Actor {
@@ -40,21 +39,29 @@ object Exercise1 extends App {
 
   //Teacher's solution
   object Counter {
+
     case object Increment
+
     case object Decrement
+
     case object Print
+
   }
 
   class Counter extends Actor {
+
     import Counter._
 
     var count = 0
+
     override def receive: Receive = {
       case Increment => count += 1
       case Decrement => count -= 1
       case Print => println(s"[counter] My current count is $count")
     }
   }
+
+  import Counter._
 
   val counter = actorSystem.actorOf(Props[Counter], "myCounter")
   (1 to 5).foreach(_ => counter ! Increment)
@@ -63,21 +70,25 @@ object Exercise1 extends App {
 
 
   /**
-   *  2. Bank account as an actor, hold an internal balance, which will react to:
+   * 2. Bank account as an actor, hold an internal balance, which will react to:
    *  - Deposit an amount
    *  - Withdraw an amount
    *  - Statement
-   *  replies with
+   *    replies with
    *  - Success
    *  - Failure
    *
-   *  interact with some other kind of actor
+   * interact with some other kind of actor
    */
 
   case class Deposit(amount: Double, ref: ActorRef)
+
   case class Withdraw(amount: Double, ref: ActorRef)
+
   case class Statement()
+
   case class Success()
+
   case class Failure()
 
   class UserActor() extends Actor {
@@ -89,9 +100,10 @@ object Exercise1 extends App {
 
   class BankAccountActor extends Actor {
     var balance = 100.0
+
     override def receive: Receive = {
       case Withdraw(amount, ref) =>
-        if(balance >= amount) {
+        if (balance >= amount) {
           balance -= amount
           ref ! Success
         }
@@ -113,26 +125,34 @@ object Exercise1 extends App {
 
   //Teacher's solution
   object BankAccount {
+
     case class DepositMoney(amount: Int)
+
     case class WithdrawMoney(amount: Int)
+
     case object BankStatement
 
     case class TransactionSuccess(message: String)
+
     case class TransactionFailure(message: String)
+
   }
 
   class BankAccount extends Actor {
+
     import BankAccount._
+
     var funds = 0
+
     override def receive: Receive = {
       case DepositMoney(amount) =>
-        if(amount < 0) sender() ! TransactionFailure("Invalid deposit amount")
+        if (amount < 0) sender() ! TransactionFailure("Invalid deposit amount")
         else {
           funds += amount
           sender() ! TransactionSuccess(s"Successfully deposited $amount")
         }
       case WithdrawMoney(amount) =>
-        if(amount < 0) sender() ! TransactionFailure("Invalid withdraw amount")
+        if (amount < 0) sender() ! TransactionFailure("Invalid withdraw amount")
         else if (amount > funds) sender() ! TransactionFailure("Insufficient funds")
         else {
           funds -= amount
@@ -143,10 +163,16 @@ object Exercise1 extends App {
   }
 
   object Person {
+
     case class LiveTheLife(account: ActorRef)
+
   }
+
   class Person extends Actor {
+
     import Person._
+    import BankAccount._
+
     override def receive: Receive = {
       case LiveTheLife(account) =>
         account ! DepositMoney(10000)
@@ -156,6 +182,8 @@ object Exercise1 extends App {
       case message => println(message.toString)
     }
   }
+
+  import Person._
 
   val account = actorSystem.actorOf(Props[BankAccount], "bankAccount")
   val person = actorSystem.actorOf(Props[Person], "person")
