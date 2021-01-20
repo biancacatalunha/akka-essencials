@@ -76,6 +76,4 @@ object MultithreadingRecap extends App {
 
   // Promises
 
-
-
 }
