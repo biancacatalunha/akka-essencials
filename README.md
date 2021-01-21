@@ -4,7 +4,7 @@
 ### Basics
 With traditional objects:
 - We store their state as data
-- we call their methods
+- We call their methods
 
 With actors:
 - We store their state as data
@@ -46,7 +46,10 @@ Message delivery guarantees
 - At most once delivery
 - For any sender-receiver pair, the message order is maintained
   
-## Course Contents
+## Course Details
+Akka Essentials with Scala - Rock the JVM - Udemy
+
+### Contents
 - [x] 1h11min Scala and Parallel Programming recap
 - [x] 3h57min Akka Actors 
 - [ ] 1h58min Testing Akka Actors 
