@@ -22,6 +22,26 @@ Some natural principles:
   - sending and receiving may not happen at the same time
   - or even in the same context
 
+### Actor Distinctions
+![Akka](images/actor_distinctions.png)
+
+### Lifecycle
+Actors can be :
+- **Started**: Create a new actorRef with a UUID at a given path
+- **Suspend**: The actorRef will enqueue but not process more messages
+- **Resume**: The actorRef will resume processing more message
+- **Restart**: Suspend ->  
+               Swap the actor instance ->  
+                    - old instance calls preRestart  
+                    - replace actor instance  
+                    - new instance calls postRestart  
+               Resume  
+- **Stop**: Frees the actor ref within a path  
+                - Calls postStop  
+                - All watching actors receive Terminated(ref)  
+            After stopping, another actor may be created at the same path  
+                - Different UUID, different actorRef  
+
 ![Akka](images/how_akka_works_1.png)
 ![Akka](images/how_akka_works_2.png)
 
