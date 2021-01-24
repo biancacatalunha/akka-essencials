@@ -74,5 +74,5 @@ Akka Essentials with Scala - Rock the JVM - Udemy
 - [x] 3h57min Akka Actors 
 - [x] 1h58min Testing Akka Actors 
 - [x] 1h51min Fault Tolerance
-- [ ] 1h37min Akka Infrastructure
+- [x] 1h37min Akka Infrastructure
 - [ ] 1h58min Akka Patterns
