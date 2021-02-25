@@ -67,7 +67,7 @@ Message delivery guarantees
 - For any sender-receiver pair, the message order is maintained
   
 ## Course Details
-Akka Essentials with Scala - Rock the JVM - Udemy
+Akka Essentials with Scala - Rock the JVM - Udemy 
 
 ### Contents
 - [x] 1h11min Scala and Parallel Programming recap
