@@ -2,11 +2,12 @@ package part6patterns
 
 import akka.actor.{Actor, ActorLogging, ActorRef, ActorSystem, Cancellable, FSM, Props}
 import akka.testkit.{ImplicitSender, TestKit}
-import org.scalatest.{BeforeAndAfterAll, OneInstancePerTest}
+import org.scalatest.time.SpanSugar.convertDoubleToGrainOfTime
 import org.scalatest.wordspec.AnyWordSpecLike
+import org.scalatest.{BeforeAndAfterAll, OneInstancePerTest}
 
 import scala.concurrent.ExecutionContextExecutor
-import scala.concurrent.duration.{DurationDouble, DurationInt}
+import scala.language.postfixOps
 
 /**
  * FSM is used when context.become gets too complicated
