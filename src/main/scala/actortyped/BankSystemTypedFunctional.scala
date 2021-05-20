@@ -16,7 +16,7 @@ object BankSystemTypedFunctional {
     final case class TransactionFailure(requestId: Long, message: String) extends Command with Customer.Command
 
     def apply(): Behavior[Command] = processing(0)
-
+//test
     def processing(funds: Double): Behavior[Command] = Behaviors.receive {(_, message) =>
       message match {
         case DepositMoney(replyTo, requestId, amount) =>
